@@ -75,10 +75,10 @@
         #{sortOrder,jdbcType=INTEGER},
       </if>
       <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
+        now(),
       </if>
       <if test="uodateTime != null" >
-        #{uodateTime,jdbcType=TIMESTAMP},
+        now(),
       </if>
     </trim>
   </insert>
@@ -101,7 +101,7 @@
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="uodateTime != null" >
-        uodate_time = #{uodateTime,jdbcType=TIMESTAMP},
+        uodate_time = now(),
       </if>
     </set>
     where Id = #{id,jdbcType=INTEGER}
@@ -113,7 +113,7 @@
       status = #{status,jdbcType=BIT},
       sort_order = #{sortOrder,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      uodate_time = #{uodateTime,jdbcType=TIMESTAMP}
+      uodate_time = now()
     where Id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
