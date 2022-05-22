@@ -132,6 +132,8 @@ public class UserController {
      * @param newUser
      * @return
      */
+    @RequestMapping(value = "update_info.do",method = RequestMethod.POST)
+    @ResponseBody
     public ServerResponse<User> updateInfo(HttpSession httpSession, User newUser) {
         User user = (User) httpSession.getAttribute(Const.CURRENT_USER);
         if (user == null) {
