@@ -1,6 +1,7 @@
 package com.mmall.controller.portal;
 
 import com.mmall.common.Const;
+import com.mmall.common.ResponseCode;
 import com.mmall.common.ServerResponse;
 import com.mmall.pojo.User;
 import com.mmall.service.IUserService;
@@ -12,6 +13,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.jws.soap.SOAPBinding;
 import javax.servlet.http.HttpSession;
+
+/**
+ * crtl+R 全局替换
+ */
 
 @Controller
 @RequestMapping("/user")
@@ -38,7 +43,7 @@ public class UserController {
      * 用户登出
      * 只需要把session中保存的用户信息删除就行
      */
-    @RequestMapping(value = "logout.do",method = RequestMethod.GET)
+    @RequestMapping(value = "logout.do",method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<String> logout(HttpSession httpSession) {
         httpSession.removeAttribute(Const.CURRENT_USER);
@@ -48,7 +53,7 @@ public class UserController {
     /**
      * 用户注册
      */
-    @RequestMapping(value = "register.do",method = RequestMethod.GET)
+    @RequestMapping(value = "register.do",method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<String> register(User user) {//这里使用到了MVC的数据自动绑定
         return iUserService.register(user);
@@ -60,7 +65,7 @@ public class UserController {
      * @param type
      * @return
      */
-    @RequestMapping(value = "check_valid.do",method = RequestMethod.GET)
+    @RequestMapping(value = "check_valid.do",method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<String> checkValid(String str, String type) {
         return iUserService.checkValid(str, type);
@@ -69,7 +74,7 @@ public class UserController {
     /**
      * 获取登陆用户的信息
      */
-    @RequestMapping(value = "get_user_info.do",method = RequestMethod.GET)
+    @RequestMapping(value = "get_user_info.do",method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<User> getUserInfo(HttpSession httpSession) {
         User user = (User)httpSession.getAttribute(Const.CURRENT_USER);
@@ -84,7 +89,7 @@ public class UserController {
      * @param username
      * @return
      */
-    @RequestMapping(value = "forget_get_question.do",method = RequestMethod.GET)
+    @RequestMapping(value = "forget_get_question.do",method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<String> forgetGetQuestion(String username) {
         return iUserService.forgetGetQuestion(username);
@@ -94,7 +99,7 @@ public class UserController {
      * 校验问题答案是否正确
      * 这一步需要用到token和guava的缓存机制
      */
-    @RequestMapping(value = "forget_check_answer.do",method = RequestMethod.GET)
+    @RequestMapping(value = "forget_check_answer.do",method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<String> forgetCheckAnswer(String username, String question, String answer) {
         return iUserService.checkAnswer(username, question, answer);
@@ -107,7 +112,7 @@ public class UserController {
      * @param forgetToken
      * @return
      */
-    @RequestMapping(value = "forget_reset_password.do",method = RequestMethod.GET)
+    @RequestMapping(value = "forget_reset_password.do",method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<String> forgetResetPassword(String username, String newPassword, String forgetToken) {
         return iUserService.forgetResetPassword(username, newPassword, forgetToken);
@@ -147,5 +152,15 @@ public class UserController {
             httpSession.setAttribute(Const.CURRENT_USER, response.getData());//更新session中的用户信息
         }
         return response;
+    }
+
+    @RequestMapping(value = "get_info.do",method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse<User> getInfo(HttpSession httpSession) {
+        User currentUser = (User) httpSession.getAttribute(Const.CURRENT_USER);
+        if (currentUser == null) {
+            return ServerResponse.createByErrorCodeMessgae(ResponseCode.ERROR.getCode(), "未登录，需要强制登录status=10");
+        }
+        return iUserService.getInfo(currentUser.getId());
     }
 }

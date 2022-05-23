@@ -146,7 +146,7 @@
   </select>
   <select id="selectLogin" resultMap="BaseResultMap" parameterType="map">
     select  <include refid="Base_Column_List" />
-    mmall_user where username = #{username}
+    from mmall_user where username = #{username}
     and password = #{password}
   </select>
   <select id="selectQuestionByUsername" resultType="string" parameterType="string">

@@ -13,6 +13,7 @@ public class PropertiesUtil {
 
     private static Logger logger = LoggerFactory.getLogger(PropertiesUtil.class);
 
+    //这个类可以去加载环境变量的键值对信息
     private static Properties props;
 
     static {

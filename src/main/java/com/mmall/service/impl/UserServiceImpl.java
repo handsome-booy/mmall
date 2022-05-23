@@ -8,20 +8,22 @@ import com.mmall.pojo.User;
 import com.mmall.service.IUserService;
 import com.mmall.util.MD5Util;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpSession;
 import java.util.UUID;
 
 @Service("iUserService")
 public class UserServiceImpl implements IUserService {
-
+    Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
     @Autowired
     private UserMapper userMapper;
 
     @Override
     public ServerResponse<User> login(String username, String password) {
+        logger.info("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
         int resultCount = userMapper.checkUsername(username);//检查用户名是否存在
         if (resultCount == 0) {
             return ServerResponse.createByErrorMessage("用户名不存在");
@@ -157,5 +159,13 @@ public class UserServiceImpl implements IUserService {
             return ServerResponse.createBySuccess("更新个人信息成功", updateUser);
         }
         return ServerResponse.createByErrorMessage("更新个人信息失败");
+    }
+
+    public ServerResponse<User> getInfo(Integer userId) {
+        User user = userMapper.selectByPrimaryKey(userId);
+        if (user == null) {
+            return ServerResponse.createByErrorMessage("找不到当前用户");
+        }
+        return ServerResponse.createBySuccess(user);
     }
 }
