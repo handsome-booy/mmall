@@ -23,7 +23,7 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public ServerResponse<User> login(String username, String password) {
-        logger.info("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        logger.info("username:{},password:{}",username,password);
         int resultCount = userMapper.checkUsername(username);//检查用户名是否存在
         if (resultCount == 0) {
             return ServerResponse.createByErrorMessage("用户名不存在");
@@ -167,5 +167,13 @@ public class UserServiceImpl implements IUserService {
             return ServerResponse.createByErrorMessage("找不到当前用户");
         }
         return ServerResponse.createBySuccess(user);
+    }
+
+    public ServerResponse checkAdminRole(User user) {
+        logger.info("当前输入的user内容是：{}", user);
+        if (user != null && user.getRole().intValue() == Const.Role.ROLE_ADMIN) {
+            return ServerResponse.createBySuccess();
+        }
+        return ServerResponse.createByError();
     }
 }
