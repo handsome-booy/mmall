@@ -3,6 +3,9 @@ package com.mmall.pojo;
 import java.math.BigDecimal;
 import java.util.Date;
 
+/**
+ * product是一个具体的商品，每一个商品都有一个对应的品类名称，即category
+ */
 public class Product {
     private Integer id;
 

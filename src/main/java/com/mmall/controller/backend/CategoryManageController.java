@@ -52,12 +52,12 @@ public class CategoryManageController {
      * 更新品类名称
      * @param httpSession
      * @param categoryId
-     * @param categorName
+     * @param categoryName
      * @return
      */
     @RequestMapping(value = "set_category_name.do")
     @ResponseBody
-    public ServerResponse setCategoryName(HttpSession httpSession, Integer categoryId, String categorName) {
+    public ServerResponse setCategoryName(HttpSession httpSession, Integer categoryId, String categoryName) {
         User user = (User) httpSession.getAttribute(Const.CURRENT_USER);
         if (user == null) {
             return ServerResponse.createByErrorCodeMessgae(ResponseCode.NEED_LOGIN.getCode(), "用户未登录，请登录");
@@ -65,7 +65,52 @@ public class CategoryManageController {
         //校验一下当前登录用户是否是管理员
         if (iUserService.checkAdminRole(user).isSuccess()) {
             //增加品类
-            return iCategoryService.updateCategoryName(categoryId, categorName);
+            return iCategoryService.updateCategoryName(categoryId, categoryName);
+        } else {
+            return ServerResponse.createByErrorMessage("无权限操作，需要管理员权限");
+        }
+    }
+
+    /**
+     * 获取当前节点的子节点（不递归）
+     * 如果没有传入当前节点，默认就是0
+     * @param httpSession
+     * @param categoryId
+     * @return
+     */
+    @RequestMapping("get_category.do")
+    @ResponseBody
+    public ServerResponse getChildrenParallelCategory(HttpSession httpSession, @RequestParam(value = "categoryId", defaultValue = "0") Integer categoryId) {
+        User user = (User) httpSession.getAttribute(Const.CURRENT_USER);
+        if (user == null) {
+            return ServerResponse.createByErrorCodeMessgae(ResponseCode.NEED_LOGIN.getCode(), "用户未登录，请登录");
+        }
+        //校验一下当前登录用户是否是管理员
+        if (iUserService.checkAdminRole(user).isSuccess()) {
+            //查询子节点的category信息，并且不递归，保持平级
+            return iCategoryService.getChildrenParallelCategory(categoryId);
+        } else {
+            return ServerResponse.createByErrorMessage("无权限操作，需要管理员权限");
+        }
+    }
+
+    /**
+     * 获取当前节点的子节点，以及子节点的子节点（递归）
+     * @param httpSession
+     * @param categoryId
+     * @return
+     */
+    @RequestMapping("get_deep_category.do")
+    @ResponseBody
+    public ServerResponse getCategoryAndDeepChildrenCategory(HttpSession httpSession, @RequestParam(value = "categoryId", defaultValue = "0") Integer categoryId) {
+        User user = (User) httpSession.getAttribute(Const.CURRENT_USER);
+        if (user == null) {
+            return ServerResponse.createByErrorCodeMessgae(ResponseCode.NEED_LOGIN.getCode(), "用户未登录，请登录");
+        }
+        //校验一下当前登录用户是否是管理员
+        if (iUserService.checkAdminRole(user).isSuccess()) {
+            //查询子节点的category信息，并且递归向下查询
+            return iCategoryService.getCategoryAndDeepChildrenCategory(categoryId);
         } else {
             return ServerResponse.createByErrorMessage("无权限操作，需要管理员权限");
         }
