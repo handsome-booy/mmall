@@ -18,8 +18,7 @@
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    Id, category_id, name, subtitle, main_image, detail, price, stock, status, sub_images, create_time,
-    update_time
+    Id, category_id, name, subtitle, main_image, detail, price, stock, status, sub_images, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -175,22 +174,34 @@
     where Id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectList" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List"/>
+    select <include refid="Base_Column_List"/>
     from mmall_product
-    ORDER BY id asc
+    order by Id asc
   </select>
   <select id="selectByNameAndProductId" resultMap="BaseResultMap" parameterType="map">
     select <include refid="Base_Column_List"/>
     from mmall_product
-    <!--where标签会自动帮助处理and-->
     <where>
       <if test="productName != null">
         and name like #{productName}
       </if>
       <if test="productId != null">
-        and id = #{productId}
+        and Id = #{productId}
       </if>
     </where>
+  </select>
+  <select id="selectByNameAndCategoryIds" resultMap="BaseResultMap" parameterType="map">
+    select <include refid="Base_Column_List"/>
+    from mmall_product
+    where status = 1
+    <if test="productName != null">
+      and name like #{productName}
+    </if>
+    <if test="categoryIdList != null">
+      and category_id in
+      <foreach item="item" index="index" open="(" separator="," close=")" collection="categoryIdList">
+        #{item}
+      </foreach>
+    </if>
   </select>
 </mapper>
