@@ -108,7 +108,7 @@ public class CartController {
         if (user == null) {
             return ServerResponse.createByErrorCodeMessgae(ResponseCode.NEED_LOGIN.getCode(), "用户未登录，请登录管理员");
         }
-        return iCartService.selectOrUnSelect(user.getId(), Const.Cart.UN_CHECKED, productId);
+        return iCartService.selectOrUnSelect(user.getId(), Const.Cart.CHECKED, productId);
     }
 
     @RequestMapping("un_select.do")
