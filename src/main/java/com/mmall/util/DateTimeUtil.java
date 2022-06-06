@@ -18,6 +18,10 @@ public class DateTimeUtil {
         return dateTime.toDate();
     }
 
+    public static Date strToDate(String dateTimeStr) {
+        return strToDate(dateTimeStr, STANDARD_FORMAT);
+    }
+
     //Date->str
 
     public static String dateToStr(Date date, String formatStr) {
