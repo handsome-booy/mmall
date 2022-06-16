@@ -1,4 +1,5 @@
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\service\IShippingService.java
+C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\util\RedisPoolUtil.java
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\vo\ProductListVo.java
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\controller\backend\UserManageController.java
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\service\impl\CartServiceImpl.java
@@ -16,11 +17,13 @@ C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\dao\OrderItemMapper
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\pojo\PayInfo.java
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\pojo\Order.java
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\pojo\Product.java
+C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\common\RedisPool.java
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\service\impl\CategoryServiceImpl.java
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\pojo\Cart.java
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\dao\OrderMapper.java
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\vo\CartProductVo.java
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\dao\CartMapper.java
+C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\controller\common\SessionExpireFilter.java
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\dao\UserMapper.java
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\service\impl\ProductServiceImpl.java
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\service\impl\ShippingServiceImpl.java
@@ -42,6 +45,7 @@ C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\controller\backend\
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\vo\ProductDetailVo.java
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\dao\CategoryMapper.java
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\service\IFileService.java
+C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\util\CookieUtil.java
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\controller\backend\OrderManageController.java
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\vo\OrderItemVo.java
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\pojo\User.java
@@ -50,6 +54,7 @@ C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\pojo\Category.java
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\vo\OrderVo.java
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\vo\ShippingVo.java
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\controller\backend\CategoryManageController.java
+C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\util\JsonUtil.java
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\controller\portal\ProductController.java
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\service\ICategoryService.java
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\service\ICartService.java
