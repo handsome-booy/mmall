@@ -10,14 +10,17 @@
      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!--扫描包里的注解，目的就是启用注解-->
-    <context:component-scan base-package="com.mmall" annotation-config="true"/>
+    <context:component-scan base-package="com.mmall" annotation-config="true">
+        <!--表示不扫描Controller注解的类,将Controller注解的类交由dispatcherServlet去扫描-->
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
 
-    <!--<context:annotation-config/>-->
     <!--启用aop-->
     <aop:aspectj-autoproxy/>
 
     <!--将原本应该放在这里的配置分离到了其他文件中-->
     <import resource="applicationContext-datasource.xml"/>
+    <import resource="applicationContext-spring-session.xml"/>
 
 
 </beans>

@@ -1,8 +1,10 @@
+C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\controller\portal\UserSpringSessonController.java
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\service\IShippingService.java
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\util\RedisPoolUtil.java
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\vo\ProductListVo.java
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\controller\backend\UserManageController.java
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\service\impl\CartServiceImpl.java
+C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\common\RedisShardedPool.java
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\util\MD5Util.java
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\controller\portal\UserController.java
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\dao\ShippingMapper.java
@@ -29,6 +31,7 @@ C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\service\impl\Produc
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\service\impl\ShippingServiceImpl.java
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\util\BigDecimalUtil.java
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\vo\OrderProductVo.java
+C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\util\RedisShardedPoolUtil.java
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\common\TokenCache.java
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\dao\ProductMapper.java
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\pojo\OrderItem.java
@@ -42,6 +45,7 @@ C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\vo\CartVo.java
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\util\PropertiesUtil.java
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\service\IProductService.java
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\controller\backend\ProductManageController.java
+C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\common\ExceptionResolver.java
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\vo\ProductDetailVo.java
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\dao\CategoryMapper.java
 C:\Users\Administrator\Desktop\mmall\src\main\java\com\mmall\service\IFileService.java

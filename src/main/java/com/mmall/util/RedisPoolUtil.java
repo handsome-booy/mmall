@@ -1,11 +1,10 @@
 package com.mmall.util;
 
-import com.mmall.common.Const;
 import com.mmall.common.RedisPool;
+import com.mmall.common.RedisShardedPool;
 import lombok.extern.slf4j.Slf4j;
 import redis.clients.jedis.Jedis;
-
-import javax.servlet.http.HttpSession;
+import redis.clients.jedis.ShardedJedis;
 
 @Slf4j//这是一个自动产生日志类的注解
 public class RedisPoolUtil {
@@ -93,7 +92,7 @@ public class RedisPoolUtil {
     }
 
     public static void main(String[] args) {
-        String set = RedisPoolUtil.set("key", "value");
+        String set = RedisShardedPoolUtil.set("key", "value");
         System.out.println(set);
     }
 }

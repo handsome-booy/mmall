@@ -7,7 +7,7 @@ import com.mmall.dao.UserMapper;
 import com.mmall.pojo.User;
 import com.mmall.service.IUserService;
 import com.mmall.util.MD5Util;
-import com.mmall.util.RedisPoolUtil;
+import com.mmall.util.RedisShardedPoolUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -103,7 +103,7 @@ public class UserServiceImpl implements IUserService {
             //把forgetToken放到本地内存中,以键值对的形式
             //TokenCache.setKey(TokenCache.TOKEN_PREFIX + username, forgetToken);
             //二期改造
-            RedisPoolUtil.setEx(TokenCache.TOKEN_PREFIX + username, forgetToken, 60*60*12);
+            RedisShardedPoolUtil.setEx(TokenCache.TOKEN_PREFIX + username, forgetToken, 60*60*12);
             return ServerResponse.createBySuccess(forgetToken);
         }
         return ServerResponse.createByErrorMessage("问题不正确");
@@ -120,7 +120,7 @@ public class UserServiceImpl implements IUserService {
         }
         //String token = TokenCache.getKey(TokenCache.TOKEN_PREFIX + forgetToken);
         //二期改造
-        String token = RedisPoolUtil.get(TokenCache.TOKEN_PREFIX);
+        String token = RedisShardedPoolUtil.get(TokenCache.TOKEN_PREFIX);
         if (StringUtils.isBlank(token)) {
             return ServerResponse.createByErrorMessage("token无效或者过期");
         }

@@ -17,8 +17,8 @@ public class RedisPool {
     private static Integer minIdle = Integer.parseInt(PropertiesUtil.getProperty("redis.min.idle", "2"));//在jedispool中最小的空闲状态的jedis实例个数
     private static Boolean testOnBorrow = Boolean.parseBoolean(PropertiesUtil.getProperty("redis.test.borrow", "true"));//在borrow一个实例时，是否要先测试jedis实例是否可用，如果为true，那么代表拿到的jedis实例一定可用
     private static Boolean testOnReturn = Boolean.parseBoolean(PropertiesUtil.getProperty("redis.test.return", "true"));//在return一个实例时，是否要先测试jedis实例是否可用，如果为true，那么代表放回jedispool的jedis实例一定可用
-    private static String redisIp = PropertiesUtil.getProperty("redis.ip");
-    private static Integer redisPort = Integer.parseInt(PropertiesUtil.getProperty("redis.port"));
+    private static String redisIp = PropertiesUtil.getProperty("redis1.ip");
+    private static Integer redisPort = Integer.parseInt(PropertiesUtil.getProperty("redis1.port"));
 
     private static void initPool() {
         JedisPoolConfig config = new JedisPoolConfig();
