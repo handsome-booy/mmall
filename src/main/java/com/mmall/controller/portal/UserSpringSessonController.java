@@ -24,7 +24,7 @@ import javax.servlet.http.HttpSession;
  */
 
 /**
- * 这里使用Spring Session框架完成了session的共享
+ * 这里使用Spring Session框架完成了session的共享,这样就不需要自己手动写cookie的生成和redis服务器的存储，减少了代码的侵入
  */
 @Controller
 @RequestMapping("/user/springsession")
