@@ -19,4 +19,6 @@ public interface IOrderService {
     ServerResponse<OrderVo> manageDetail(Long orderNo);
     ServerResponse<PageInfo> manageSearch(Long orderNo, int pageNum, int pageSize);
     ServerResponse<String> manageSendGoods(Long orderNo);
+    //定时关单：多少小时以内未付款的订单会被关闭
+    void closeOrder(int hour);
 }

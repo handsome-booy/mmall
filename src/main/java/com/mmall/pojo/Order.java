@@ -3,6 +3,9 @@ package com.mmall.pojo;
 import java.math.BigDecimal;
 import java.util.Date;
 
+/**
+ * order是一个包含多个商品的订单
+ */
 public class Order {
     private Integer id;
 

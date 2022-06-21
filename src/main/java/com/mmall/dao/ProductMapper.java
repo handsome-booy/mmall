@@ -25,4 +25,7 @@ public interface ProductMapper {
     List<Product> selectByNameAndProductId(@Param("productName") String productName, @Param("productId") Integer productId);
 
     List<Product> selectByNameAndCategoryIds(@Param("productName") String productName, @Param("categoryIdList") List<Integer> categoryIdList);
+
+    //这里一定要Integer，因为int无法为null
+    Integer selectStockByProductId(Integer id);
 }

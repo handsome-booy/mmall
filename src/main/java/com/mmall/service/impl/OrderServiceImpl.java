@@ -32,16 +32,19 @@ import com.mmall.vo.OrderVo;
 import com.mmall.vo.ShippingVo;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.time.DateUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.*;
 
+@Transactional
 @Service("iOrderService")
 public class OrderServiceImpl<OrderV> implements IOrderService {
 
@@ -590,5 +593,34 @@ public class OrderServiceImpl<OrderV> implements IOrderService {
             }
         }
         return ServerResponse.createByErrorMessage("订单不存在");
+    }
+
+    public void closeOrder(int hour) {
+        Date closeDateTime = DateUtils.addHours(new Date(), -hour);
+        List<Order> orderList = orderMapper.selectOrderStatusByCreateTime(Const.OrderStatusEnum.NO_PAY.getCode(), DateTimeUtil.dateToStr(closeDateTime));
+
+        for (Order order : orderList) {
+            //得到一个订单下面所有商品的信息
+            List<OrderItem> orderItemList = orderItemMapper.getByOrderNo(order.getOrderNo());
+            for (OrderItem orderItem : orderItemList) {
+                //要使用主键查询，防止锁表;使用主键，只会锁当前行
+                Integer stock = productMapper.selectStockByProductId(orderItem.getId());
+
+                //如果商品被删除，就会返回一个null的stock
+                if (stock == null) {
+                    continue;
+                }
+
+                Product product = new Product();
+                product.setId(orderItem.getProductId());
+                product.setStock(stock + orderItem.getQuantity());
+
+                productMapper.updateByPrimaryKeySelective(product);
+            }
+
+            orderMapper.closeOrderByOrderId(order.getId());
+            log.info("关闭订单OrderNo:{}", order.getOrderNo());
+        }
+
     }
 }
