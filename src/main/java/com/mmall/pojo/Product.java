@@ -3,6 +3,9 @@ package com.mmall.pojo;
 import java.math.BigDecimal;
 import java.util.Date;
 
+/**
+ * product是一个具体的商品，每一个商品都有一个对应的品类名称，即category
+ */
 public class Product {
     private Integer id;
 
@@ -22,11 +25,14 @@ public class Product {
 
     private Integer status;
 
+
+    private String subImages;
+
     private Date createTime;
 
     private Date updateTime;
 
-    public Product(Integer id, Integer categoryId, String name, String subtitle, String mainImage, String detail, BigDecimal price, Integer stock, Integer status, Date createTime, Date updateTime) {
+    public Product(Integer id, Integer categoryId, String name, String subtitle, String mainImage, String detail, BigDecimal price, Integer stock, Integer status, String subImages, Date createTime, Date updateTime) {
         this.id = id;
         this.categoryId = categoryId;
         this.name = name;
@@ -36,8 +42,13 @@ public class Product {
         this.price = price;
         this.stock = stock;
         this.status = status;
+        this.subImages = subImages;
         this.createTime = createTime;
         this.updateTime = updateTime;
+    }
+
+    public void setSubImages(String subImages) {
+        this.subImages = subImages;
     }
 
     public Product() {
@@ -70,6 +81,10 @@ public class Product {
 
     public String getSubtitle() {
         return subtitle;
+    }
+
+    public String getSubImages() {
+        return subImages;
     }
 
     public void setSubtitle(String subtitle) {

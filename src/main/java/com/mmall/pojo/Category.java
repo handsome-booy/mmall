@@ -1,13 +1,17 @@
 package com.mmall.pojo;
 
 import java.util.Date;
+import java.util.Objects;
 
+/**
+ * category是一个大的类别，不是具体的一个商品
+ */
 public class Category {
     private Integer id;
 
     private Integer parentId;
 
-    private String name;
+    private String categoryName;
 
     private Boolean status;
 
@@ -17,10 +21,10 @@ public class Category {
 
     private Date uodateTime;
 
-    public Category(Integer id, Integer parentId, String name, Boolean status, Integer sortOrder, Date createTime, Date uodateTime) {
+    public Category(Integer id, Integer parentId, String categoryName, Boolean status, Integer sortOrder, Date createTime, Date uodateTime) {
         this.id = id;
         this.parentId = parentId;
-        this.name = name;
+        this.categoryName = categoryName;
         this.status = status;
         this.sortOrder = sortOrder;
         this.createTime = createTime;
@@ -47,12 +51,12 @@ public class Category {
         this.parentId = parentId;
     }
 
-    public String getName() {
-        return name;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName == null ? null : categoryName.trim();
     }
 
     public Boolean getStatus() {
@@ -85,5 +89,18 @@ public class Category {
 
     public void setUodateTime(Date uodateTime) {
         this.uodateTime = uodateTime;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Category category = (Category) o;
+        return Objects.equals(id, category.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

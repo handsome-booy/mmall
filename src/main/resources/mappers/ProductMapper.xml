@@ -12,13 +12,13 @@
       <arg column="price" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
       <arg column="stock" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="status" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="sub_images" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
     </constructor>
   </resultMap>
   <sql id="Base_Column_List" >
-    Id, category_id, name, subtitle, main_image, detail, price, stock, status, create_time, 
-    update_time
+    Id, category_id, name, subtitle, main_image, detail, price, stock, status, sub_images, create_time, update_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -33,12 +33,12 @@
   <insert id="insert" parameterType="com.mmall.pojo.Product" >
     insert into mmall_product (Id, category_id, name, 
       subtitle, main_image, detail, 
-      price, stock, status, 
+      price, stock, status, sub_images,
       create_time, update_time)
     values (#{id,jdbcType=INTEGER}, #{categoryId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
       #{subtitle,jdbcType=VARCHAR}, #{mainImage,jdbcType=VARCHAR}, #{detail,jdbcType=VARCHAR}, 
-      #{price,jdbcType=DECIMAL}, #{stock,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+      #{price,jdbcType=DECIMAL}, #{stock,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{subImages, jdbcType=VARCHAR},
+            now(), now())
   </insert>
   <insert id="insertSelective" parameterType="com.mmall.pojo.Product" >
     insert into mmall_product
@@ -69,6 +69,9 @@
       </if>
       <if test="status != null" >
         status,
+      </if>
+      <if test="subImages != null">
+        sub_images,
       </if>
       <if test="createTime != null" >
         create_time,
@@ -105,11 +108,14 @@
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
       </if>
+      <if test="subImages != null">
+        #{subImages,jdbcType=VARCHAR},
+      </if>
       <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
+        now(),
       </if>
       <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
+        now(),
       </if>
     </trim>
   </insert>
@@ -140,11 +146,14 @@
       <if test="status != null" >
         status = #{status,jdbcType=INTEGER},
       </if>
+      <if test="subImages != null">
+        #{subImages,jdbcType=VARCHAR},
+      </if>
       <if test="createTime != null" >
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="updateTime != null" >
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
+        update_time = now(),
       </if>
     </set>
     where Id = #{id,jdbcType=INTEGER}
@@ -159,8 +168,46 @@
       price = #{price,jdbcType=DECIMAL},
       stock = #{stock,jdbcType=INTEGER},
       status = #{status,jdbcType=INTEGER},
+      subImages = #{subImages,jdbcType=VARCHAR}
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      update_time = now()
     where Id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectList" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from mmall_product
+    order by Id asc
+  </select>
+  <select id="selectByNameAndProductId" resultMap="BaseResultMap" parameterType="map">
+    select <include refid="Base_Column_List"/>
+    from mmall_product
+    <where>
+      <if test="productName != null">
+        and name like #{productName}
+      </if>
+      <if test="productId != null">
+        and Id = #{productId}
+      </if>
+    </where>
+  </select>
+  <select id="selectByNameAndCategoryIds" resultMap="BaseResultMap" parameterType="map">
+    select <include refid="Base_Column_List"/>
+    from mmall_product
+    where status = 1
+    <if test="productName != null">
+      and name like #{productName}
+    </if>
+    <if test="categoryIdList != null">
+      and category_id in
+      <foreach item="item" index="index" open="(" separator="," close=")" collection="categoryIdList">
+        #{item}
+      </foreach>
+    </if>
+  </select>
+  <select id="selectStockByProductId" resultType="int" parameterType="java.lang.Integer">
+    select stock
+    from mmall_product
+    where id = #{id}
+    for update
+  </select>
 </mapper>

@@ -17,7 +17,7 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
 
-    <org.springframework.version>4.0.0.RELEASE</org.springframework.version>
+    <org.springframework.version>4.0.3.RELEASE</org.springframework.version>
     <org.mybatis.version>3.4.1</org.mybatis.version>
     <org.mybatis.spring.version>1.3.0</org.mybatis.spring.version>
   </properties>
@@ -243,10 +243,24 @@
       <version>1.3</version>
     </dependency>
 
+    <!--二期新增功能：redis服务器的连接api-->
     <dependency>
       <groupId>redis.clients</groupId>
       <artifactId>jedis</artifactId>
-      <version>2.9.0</version>
+      <version>2.6.0</version>
+    </dependency>
+
+    <!--spring session单点登陆-->
+    <dependency>
+      <groupId>org.springframework.session</groupId>
+      <artifactId>spring-session-data-redis</artifactId>
+      <version>1.2.0.RELEASE</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.16.18</version>
     </dependency>
   </dependencies>
 
@@ -268,18 +282,58 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.1</version>
         <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
+          <source>1.7</source>
+          <target>1.7</target>
           <encoding>UTF-8</encoding>
           <compilerArguments>
             <extdirs>${project.basedir}/src/main/webapp/WEB-INF/lib</extdirs>
           </compilerArguments>
+          <fork>true</fork>
         </configuration>
       </plugin>
     </plugins>
 
+    <resources>
+      <!--代表我们需要把什么目录加入到我们环境中去-->
+      <resource>
+        <directory>src/main/resources.${deploy.type}</directory>
+        <excludes>
+          <exclude>*.jsp</exclude>
+        </excludes>
+      </resource>
+      <resource>
+        <directory>src/main/resources</directory>
+      </resource>
+    </resources>
   </build>
+
+  <profiles>
+    <profile>
+      <id>dev</id>
+      <activation>
+        <activeByDefault>true</activeByDefault> <!--代表这个是默认环境-->
+      </activation>
+      <properties>
+        <deploy.type>dev</deploy.type> <!--这个就是把当前环境用一个值代替-->
+      </properties>
+    </profile>
+
+    <profile>
+      <id>beta</id>
+      <properties>
+        <deploy.type>beta</deploy.type>
+      </properties>
+    </profile>
+
+    <profile>
+      <id>prod</id>
+      <properties>
+        <deploy.type>prod</deploy.type>
+      </properties>
+    </profile>
+  </profiles>
 
 
 </project>

@@ -5,15 +5,16 @@
     <constructor >
       <idArg column="Id" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="parent_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
-      <arg column="name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="categoryName" jdbcType="VARCHAR" javaType="java.lang.String" />
       <arg column="status" jdbcType="BIT" javaType="java.lang.Boolean" />
       <arg column="sort_order" jdbcType="INTEGER" javaType="java.lang.Integer" />
       <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
       <arg column="uodate_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
     </constructor>
   </resultMap>
+  <!--这里的意思就是把Id, parent_id, name, status, sort_order, create_time, uodate_time封装成Base_Column_List，减少我们敲的代码量-->
   <sql id="Base_Column_List" >
-    Id, parent_id, name, status, sort_order, create_time, uodate_time
+    Id, parent_id, categoryName, status, sort_order, create_time, uodate_time
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -26,12 +27,12 @@
     where Id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.mmall.pojo.Category" >
-    insert into mmall_category (Id, parent_id, name, 
+    insert into mmall_category (Id, parent_id, categoryName,
       status, sort_order, create_time, 
       uodate_time)
-    values (#{id,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
-      #{status,jdbcType=BIT}, #{sortOrder,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{uodateTime,jdbcType=TIMESTAMP})
+    values (#{id,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER}, #{categoryName,jdbcType=VARCHAR},
+      #{status,jdbcType=BIT}, #{sortOrder,jdbcType=INTEGER}, now(),
+            now())
   </insert>
   <insert id="insertSelective" parameterType="com.mmall.pojo.Category" >
     insert into mmall_category
@@ -42,8 +43,8 @@
       <if test="parentId != null" >
         parent_id,
       </if>
-      <if test="name != null" >
-        name,
+      <if test="categoryName != null" >
+        categoryName,
       </if>
       <if test="status != null" >
         status,
@@ -65,8 +66,8 @@
       <if test="parentId != null" >
         #{parentId,jdbcType=INTEGER},
       </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
+      <if test="categoryName != null" >
+        #{categoryName,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
         #{status,jdbcType=BIT},
@@ -75,10 +76,10 @@
         #{sortOrder,jdbcType=INTEGER},
       </if>
       <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
+        now(),
       </if>
       <if test="uodateTime != null" >
-        #{uodateTime,jdbcType=TIMESTAMP},
+        now(),
       </if>
     </trim>
   </insert>
@@ -88,8 +89,8 @@
       <if test="parentId != null" >
         parent_id = #{parentId,jdbcType=INTEGER},
       </if>
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
+      <if test="categoryName != null" >
+        categoryName = #{categoryName,jdbcType=VARCHAR},
       </if>
       <if test="status != null" >
         status = #{status,jdbcType=BIT},
@@ -101,7 +102,7 @@
         create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="uodateTime != null" >
-        uodate_time = #{uodateTime,jdbcType=TIMESTAMP},
+        uodate_time = now(),
       </if>
     </set>
     where Id = #{id,jdbcType=INTEGER}
@@ -109,11 +110,16 @@
   <update id="updateByPrimaryKey" parameterType="com.mmall.pojo.Category" >
     update mmall_category
     set parent_id = #{parentId,jdbcType=INTEGER},
-      name = #{name,jdbcType=VARCHAR},
+        categoryName = #{categoryName,jdbcType=VARCHAR},
       status = #{status,jdbcType=BIT},
       sort_order = #{sortOrder,jdbcType=INTEGER},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      uodate_time = #{uodateTime,jdbcType=TIMESTAMP}
+      uodate_time = now()
     where Id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectCategoryChildrenByParentId" resultMap="BaseResultMap" parameterType="int">
+    select
+    <include refid="Base_Column_List"></include>
+    from mmall_category where parent_Id = #{parentId}
+  </select>
 </mapper>

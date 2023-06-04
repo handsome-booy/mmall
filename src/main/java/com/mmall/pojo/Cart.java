@@ -2,6 +2,9 @@ package com.mmall.pojo;
 
 import java.util.Date;
 
+/**
+ * 这个类是一个购物车中一个小的记录，而不是对应一个购物车
+ */
 public class Cart {
     private Integer id;
 
